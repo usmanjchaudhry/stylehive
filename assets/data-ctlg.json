@@ -1,0 +1,24 @@
+{
+    "categories": [
+      {
+        "id": 1,
+        "name": "Shirts",
+        "image": "assets/images/product_1.png"
+      },
+      {
+        "id": 2,
+        "name": "Winter Jacket",
+        "image": "assets/images/product_2.png"
+      },
+      {
+        "id": 3,
+        "name": "Jacket",
+        "image": "assets/images/product_3.png"
+      },
+      {
+        "id": 4,
+        "name": "Shorts",
+        "image": "assets/images/product_4.png"
+      }
+    ]
+  }  

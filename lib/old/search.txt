@@ -1,0 +1,45 @@
+// Search Page
+class SearchPage extends StatelessWidget {
+  final AppBar Function(BuildContext) appBarBuilder;
+
+  const SearchPage({super.key, required this.appBarBuilder});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: appBarBuilder(context),
+        body: const SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(
+                height: 15,
+              ),
+              SearchBar(
+                  leading: Row(
+                    children: [
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Icon(Icons.search),
+                      SizedBox(
+                        height: 10,
+                      ),
+                    ],
+                  ),
+                  hintText: "What do you want to look for?"),
+              SizedBox(
+                height: 10,
+              ),
+              Center(
+                  child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(height: 100),
+                  Text("Search Page"),
+                ],
+              )),
+            ],
+          ),
+        ));
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Classic T-Shirt",
+      "image": "assets/images/product_1.png",
+      "description": "A comfortable, classic cotton t-shirt available in a variety of colors.",
+      "price": 19.99
+    },
+    {
+      "id": 2,
+      "name": "Winter Jacket",
+      "image": "assets/images/product_2.png",
+      "description": "A warm and cozy jacket perfect for cold weather.",
+      "price": 29.99
+    },
+    {
+      "id": 3,
+      "name": "Jacket",
+      "image": "assets/images/product_3.png",
+      "description": "A stylish jacket for any season, offering comfort and protection.",
+      "price": 49.99
+    },
+    {
+      "id": 4,
+      "name": "Summer Shorts",
+      "image": "assets/images/product_4.png",
+      "description": "Lightweight and breathable shorts, ideal for hot summer days.",
+      "price": 149.99
+    },
+    {
+      "id": 5,
+      "name": "Denim Jeans",
+      "image": "assets/images/product_1.png",
+      "description": "Classic denim jeans with a timeless fit and durable material.",
+      "price": 39.99
+    },
+    {
+      "id": 6,
+      "name": "Leather Boots",
+      "image": "assets/images/product_2.png",
+      "description": "Durable and stylish leather boots suitable for all occasions.",
+      "price": 89.99
+    },
+    {
+      "id": 7,
+      "name": "Sneakers",
+      "image": "assets/images/product_3.png",
+      "description": "Comfortable and versatile sneakers for everyday wear.",
+      "price": 59.99
+    },
+    {
+      "id": 8,
+      "name": "Baseball Cap",
+      "image": "assets/images/product_4.png",
+      "description": "A classic baseball cap, perfect for casual outfits.",
+      "price": 14.99
+    },
+    {
+      "id": 9,
+      "name": "Sports Watch",
+      "image": "assets/images/product_1.png",
+      "description": "A water-resistant sports watch with multiple features.",
+      "price": 199.99
+    },
+    {
+      "id": 10,
+      "name": "Sunglasses",
+      "image": "assets/images/product_2.png",
+      "description": "Stylish sunglasses with UV protection.",
+      "price": 24.99
+    },
+    {
+      "id": 11,
+      "name": "Beanie Hat",
+      "image": "assets/images/product_3.png",
+      "description": "A soft and warm beanie hat, ideal for cold days.",
+      "price": 9.99
+    },
+    {
+      "id": 12,
+      "name": "Backpack",
+      "image": "assets/images/product_4.png",
+      "description": "A durable backpack with multiple compartments for organization.",
+      "price": 79.99
+    },
+    {
+      "id": 13,
+      "name": "Belt",
+      "image": "assets/images/product_1.png",
+      "description": "A high-quality leather belt to complement any outfit.",
+      "price": 34.99
+    },
+    {
+      "id": 14,
+      "name": "Wool Scarf",
+      "image": "assets/images/product_2.png",
+      "description": "A soft wool scarf to keep you warm and stylish.",
+      "price": 19.99
+    },
+    {
+      "id": 15,
+      "name": "Running Shoes",
+      "image": "assets/images/product_3.png",
+      "description": "Lightweight running shoes designed for comfort and performance.",
+      "price": 89.99
+    },
+    {
+      "id": 16,
+      "name": "Leather Wallet",
+      "image": "assets/images/product_4.png",
+      "description": "A slim leather wallet with ample space for cards and cash.",
+      "price": 49.99
+    }
+  ]
+}

@@ -1,0 +1,358 @@
+import 'dart:convert';
+import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
+
+/// PRODUCTS Object class
+/// This will be used to create the product, this will be the blueprint
+class Product {
+  final String name;
+  final String image;
+  final double price;
+
+  Product({required this.name, required this.image, required this.price});
+
+  // Convert a Product into a Map for JSON encoding
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        'image': image,
+        'price': price,
+      };
+
+  // Create a Product from JSON data
+  factory Product.fromJson(Map<String, dynamic> json) {
+    return Product(
+      name: json['name'],
+      image: json['image'],
+      price: json['price'],
+    );
+  }
+}
+
+class CartManager {
+  List<Product> _cartItems = [];
+
+  // Add product to cart
+  void addProductToCart(Product product) {
+    _cartItems.add(product);
+    saveCart();
+  }
+
+  // Get cart items
+  List<Product> get cartItems => _cartItems;
+
+  // Save cart to cart.json
+  Future<void> saveCart() async {
+    final directory = await getApplicationDocumentsDirectory();
+    final file = File('${directory.path}/cart.json');
+    final cartJson =
+        jsonEncode(_cartItems.map((product) => product.toJson()).toList());
+    await file.writeAsString(cartJson);
+  }
+
+  // Load cart from cart.json
+  Future<void> loadCart() async {
+    try {
+      final directory = await getApplicationDocumentsDirectory();
+      final file = File('${directory.path}/cart.json');
+      if (await file.exists()) {
+        final contents = await file.readAsString();
+        final List<dynamic> jsonData = jsonDecode(contents);
+        _cartItems = jsonData.map((json) => Product.fromJson(json)).toList();
+      }
+    } catch (e) {
+      print("Error loading cart: $e");
+    }
+  }
+}
+
+final CartManager cartManager = CartManager(); // Global instance of CartManager
+
+/// Global Method to build the top AppBar for reuse
+AppBar buildAppBar(BuildContext context) {
+  return AppBar(
+    backgroundColor: Colors.black,
+    automaticallyImplyLeading: false, // No back button at all
+    title: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        TextButton(
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const ShopPage(appBarBuilder: buildAppBar)),
+            );
+          },
+          child: const Text('Shop', style: TextStyle(color: Colors.white)),
+        ),
+        TextButton(
+          onPressed: () {
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
+          },
+          child: const Text('StyleHive', style: TextStyle(color: Colors.white)),
+        ),
+        Row(
+          children: [
+            TextButton(
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ProfilePage(appBarBuilder: buildAppBar)),
+                );
+              },
+              child: const Text('Profile', style: TextStyle(color: Colors.white)),
+            ),
+            IconButton(
+              icon: const Icon(Icons.search, color: Colors.white),
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SearchPage(appBarBuilder: buildAppBar)),
+                );
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.shopping_cart, color: Colors.white),
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const CartPage(appBarBuilder: buildAppBar)),
+                );
+              },
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+}
+
+/// Home Page
+class HomePage extends StatelessWidget {
+  final List<Product> products = [
+    Product(name: 'T-Shirt', image: 'assets/tshirt.png', price: 19.99),
+    Product(name: 'Jeans', image: 'assets/jeans.png', price: 39.99),
+    Product(name: 'Sneakers', image: 'assets/sneakers.png', price: 49.99),
+  ];
+
+  const HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: buildAppBar(context),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 0.75),
+          itemCount: products.length,
+          itemBuilder: (context, index) {
+            final product = products[index];
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProductDetailsPage(
+                      productName: product.name,
+                      productDescription: 'Description for ${product.name}',
+                      productImage: product.image,
+                      productPrice: product.price,
+                    ),
+                  ),
+                );
+              },
+              child: Card(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(product.image, height: 100),
+                    Text(product.name, style: const TextStyle(fontSize: 16)),
+                    Text('\$${product.price.toStringAsFixed(2)}', style: const TextStyle(color: Colors.green)),
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+/// Shop Page
+class ShopPage extends StatelessWidget {
+  final AppBar Function(BuildContext) appBarBuilder;
+
+  const ShopPage({super.key, required this.appBarBuilder});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: appBarBuilder(context), // Use the same AppBar
+      body: const Center(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text("Shop Page"),
+          SizedBox(height: 4.0),
+        ],
+      )),
+    );
+  }
+}
+
+// Profile Page
+class ProfilePage extends StatelessWidget {
+  final AppBar Function(BuildContext) appBarBuilder;
+
+  const ProfilePage({super.key, required this.appBarBuilder});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: appBarBuilder(context),
+      body: const Center(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text("User Profile Page"),
+          SizedBox(height: 20.0),
+        ],
+      )),
+    );
+  }
+}
+
+// Search Page
+class SearchPage extends StatelessWidget {
+  final AppBar Function(BuildContext) appBarBuilder;
+
+  const SearchPage({super.key, required this.appBarBuilder});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: appBarBuilder(context),
+      body: const Center(
+          child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text("Search Page"),
+        ],
+      )),
+    );
+  }
+}
+
+/// Cart Page
+class CartPage extends StatelessWidget {
+  final AppBar Function(BuildContext) appBarBuilder;
+
+  const CartPage({super.key, required this.appBarBuilder});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: appBarBuilder(context),
+      body: const Center(
+          child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text("Cart Page"),
+        ],
+      )),
+    );
+  }
+}
+
+/// Product Details Page
+class ProductDetailsPage extends StatelessWidget {
+  final String productName;
+  final String productDescription;
+  final String productImage;
+  final double productPrice;
+
+  const ProductDetailsPage({
+    super.key,
+    required this.productName,
+    required this.productDescription,
+    required this.productImage,
+    required this.productPrice,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Product Details', style: TextStyle(color: Colors.white)),
+        backgroundColor: Colors.black,
+        iconTheme: const IconThemeData(color: Colors.white),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            bool isSmallScreen = constraints.maxWidth < 750;
+
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                isSmallScreen
+                    ? Column(
+                        children: [
+                          Image.asset(productImage, fit: BoxFit.contain),
+                          const SizedBox(height: 20),
+                          _buildProductDetails(context),
+                        ],
+                      )
+                    : Flexible(
+                        child: Row(
+                          children: [
+                            Expanded(child: Image.asset(productImage, fit: BoxFit.contain)),
+                            const SizedBox(width: 20),
+                            Expanded(child: _buildProductDetails(context)),
+                          ],
+                        ),
+                      )
+              ],
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  // Widget to build product details and buy button
+  Widget _buildProductDetails(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(productName, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 8),
+        Text(productDescription, style: const TextStyle(fontSize: 16)),
+        const SizedBox(height: 16),
+        Text('\$${productPrice.toStringAsFixed(2)}', style: const TextStyle(color: Colors.green, fontSize: 20)),
+        const SizedBox(height: 20),
+        ElevatedButton(
+          onPressed: () {
+            cartManager.addProductToCart(Product(name: productName, image: productImage, price: productPrice));
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Added to Cart!')));
+          },
+          child: const Text('Add to Cart'),
+        ),
+      ],
+    );
+  }
+}
+
+/// Main Function
+void main() {
+  runApp(MaterialApp(
+    title: 'StyleHive',
+    home: HomePage(),
+    theme: ThemeData(
+      primarySwatch: Colors.blue,
+    ),
+  ));
+}

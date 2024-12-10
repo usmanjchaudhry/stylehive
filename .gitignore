@@ -1,0 +1,103 @@
+# Flutter/Dart/Pub related
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.flutter-versions
+.pub-cache/
+.pub/
+build/
+packages/
+# Keep pubspec.lock for application packages
+# Remove it if you're publishing a package
+pubspec.lock
+
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+.packages
+*.lock
+*.log
+
+# Generated files
+**/GeneratedPluginRegistrant.*
+**/generated_plugin_registrant.*
+**/generated_plugins.cmake
+
+# Flutter assets
+flutter_*.png
+linked_*.ds
+unlinked.ds
+unlinked_spec.ds
+
+# Android related
+android/.gradle/
+android/app/build/
+**/android/**/gradle-wrapper.jar
+**/android/**/GeneratedPluginRegistrant.java
+android/key.properties
+android/app/key.jks
+android/captures/
+**/*.jks
+
+# iOS/Xcode related
+ios/Flutter/App.framework
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Flutter/Generated.xcconfig
+ios/Flutter/flutter_export_environment.sh
+ios/Flutter/ephemeral/
+ios/Pods/
+ios/Runner.xcworkspace/
+ios/ServiceDefinitions.json
+ios/Runner/GeneratedPluginRegistrant.*
+**/ios/.symlinks/
+**/ios/Flutter/ephemeral/
+
+# macOS related
+macos/Flutter/GeneratedPluginRegistrant.*
+macos/Flutter/ephemeral/
+macos/Pods/
+
+# Web related
+web/.dart_tool/
+web/build/
+
+# Windows related
+windows/flutter/GeneratedPluginRegistrant.*
+windows/flutter/generated_plugin_registrant.*
+windows/flutter/generated_plugins.cmake
+windows/flutter/ephemeral/
+
+# Linux related
+linux/flutter/GeneratedPluginRegistrant.*
+linux/flutter/generated_plugin_registrant.*
+linux/flutter/generated_plugins.cmake
+linux/flutter/ephemeral/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Visual Studio Code related
+.vscode/
+
+# Coverage
+coverage/
+
+# Symbols
+app.*.symbols
+
+# Obfuscation
+app.*.map.json
+
+# Exceptions
+!pubspec.lock  # Keep pubspec.lock for application projects
